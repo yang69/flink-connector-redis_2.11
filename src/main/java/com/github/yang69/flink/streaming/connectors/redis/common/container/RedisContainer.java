@@ -188,6 +188,23 @@ public class RedisContainer implements RedisCommandsContainer, Closeable {
     }
 
     @Override
+    public void setex(final String key, final int seconds, final String value) {
+        Jedis jedis = null;
+        try {
+            jedis = getInstance();
+            jedis.setex(key, seconds, value);
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command SETEX to key {} with expire {} error message {}",
+                        key, seconds, e.getMessage());
+            }
+            throw e;
+        } finally {
+            releaseInstance(jedis);
+        }
+    }
+
+    @Override
     public void pfadd(final String key, final String element) {
         Jedis jedis = null;
         try {

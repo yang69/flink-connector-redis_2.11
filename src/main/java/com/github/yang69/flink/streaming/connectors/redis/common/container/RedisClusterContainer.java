@@ -135,6 +135,19 @@ public class RedisClusterContainer implements RedisCommandsContainer, Closeable 
     }
 
     @Override
+    public void setex(final String key, final int seconds, final String value) {
+        try {
+            jedisCluster.setex(key, seconds, value);
+        } catch (Exception e) {
+            if (LOG.isErrorEnabled()) {
+                LOG.error("Cannot send Redis message with command SETEX to key {} with expire {} error message {}",
+                        key, seconds, e.getMessage());
+            }
+            throw e;
+        }
+    }
+
+    @Override
     public void pfadd(final String key, final String element) {
         try {
             jedisCluster.set(key, element);

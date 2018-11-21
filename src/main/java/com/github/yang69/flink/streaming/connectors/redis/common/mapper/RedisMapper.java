@@ -31,6 +31,9 @@ import java.io.Serializable;
  *    public String getKeyFromData(Tuple2<String, String> data) {
  *        return data.f0;
  *    }
+ *    public int getSecondsFromData(Tuple2<String, String> data) {
+ *        return 120;
+ *    }
  *    public String getValueFromData(Tuple2<String, String> data) {
  *        return data.f1;
  *    }
@@ -55,6 +58,14 @@ public interface RedisMapper<T> extends Function, Serializable {
      * @return key
      */
     String getKeyFromData(T data);
+
+    /**
+     * Extracts expire seconds from data.
+     *
+     * @param data source data
+     * @return seconds
+     */
+    int getSecondsFromData(T data);
 
     /**
      * Extracts value from data.

@@ -64,6 +64,9 @@ import java.util.Objects;
  *    public String getKeyFromData(Tuple2<String, String> data) {
  *        return data.f0;
  *    }
+ *    public int getSecondsFromData(Tuple2<String, String> data) {
+ *        return 120;
+ *    }
  *    public String getValueFromData(Tuple2<String, String> data) {
  *        return data.f1;
  *    }
@@ -127,6 +130,7 @@ public class RedisSink<IN> extends RichSinkFunction<IN> {
     @Override
     public void invoke(IN input) throws Exception {
         String key = redisSinkMapper.getKeyFromData(input);
+        int seconds = redisSinkMapper.getSecondsFromData(input);
         String value = redisSinkMapper.getValueFromData(input);
 
         switch (redisCommand) {
@@ -141,6 +145,9 @@ public class RedisSink<IN> extends RichSinkFunction<IN> {
                 break;
             case SET:
                 this.redisCommandsContainer.set(key, value);
+                break;
+            case SETEX:
+                this.redisCommandsContainer.setex(key, seconds, value);
                 break;
             case PFADD:
                 this.redisCommandsContainer.pfadd(key, value);
