@@ -46,6 +46,13 @@ public enum RedisCommand {
     SET(RedisDataType.STRING),
 
     /**
+     * Set key with expire time to hold the string value. If key already holds a value,
+     * it is overwritten, regardless of its type.
+     * 将value设置到key中，同时设置key的过期时间。如果key已存在，则会被覆盖。
+     */
+    SETEX(RedisDataType.STRING),
+
+    /**
      * Adds the element to the HyperLogLog data structure stored at the variable name specified as first argument.
      */
     PFADD(RedisDataType.HYPER_LOG_LOG),

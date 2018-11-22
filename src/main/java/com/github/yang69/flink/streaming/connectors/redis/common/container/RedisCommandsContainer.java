@@ -89,6 +89,17 @@ public interface RedisCommandsContainer extends Serializable {
     void set(String key, String value);
 
     /**
+     * Set key to hold the string value. If key already holds a value, it is overwritten,
+     * regardless of its type. Any previous time to live associated with the key is
+     * discarded on successful SETEX operation.
+     *
+     * @param key the key name in which value to be set
+     * @param seconds the key expire time in seconds
+     * @param value the value
+     */
+    void setex(String key, int seconds, String value);
+
+    /**
      * Adds all the element arguments to the HyperLogLog data structure
      * stored at the variable name specified as first argument.
      *
